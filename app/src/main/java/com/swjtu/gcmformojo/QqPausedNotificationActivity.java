@@ -3,6 +3,7 @@ package com.swjtu.gcmformojo;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 //向配置文件写入一个值（下一次开始推送时间，当前时间加上暂停时间）
 //如果接收到消息，则判断是否满足条件，满足则不推送，否则推送
-public class QqPausedNotificationActivity extends Activity
+public class QqPausedNotificationActivity extends AppCompatActivity
 {
     private int checked = R.id.paused_one_hour;
     private RadioGroup radioGroup;

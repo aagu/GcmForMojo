@@ -7,10 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class HelpActivity extends Activity {
+public class HelpActivity extends AppCompatActivity {
 
     private TextView textView_Version;
 

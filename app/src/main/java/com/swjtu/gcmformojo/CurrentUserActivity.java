@@ -1,5 +1,6 @@
 package com.swjtu.gcmformojo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.huawei.android.hms.agent.HMSAgent;
-import com.huawei.android.hms.agent.common.handler.ConnectHandler;
-import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
-import com.huawei.hms.support.api.push.TokenResult;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ import static com.swjtu.gcmformojo.MyApplication.mi_APP_ID;
 import static com.swjtu.gcmformojo.MyApplication.mi_APP_KEY;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;
 
-public class CurrentUserActivity extends Activity {
+public class CurrentUserActivity extends AppCompatActivity {
 
     private ArrayList<User> currentUserList;
     public static Handler userHandler;
@@ -55,6 +53,8 @@ public class CurrentUserActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_user);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
         getOverflowMenu();
 
         currentUserList = MyApplication.getInstance().getCurrentUserList();
@@ -87,15 +87,15 @@ public class CurrentUserActivity extends Activity {
                 //stopMiPush();
                // Log.e(MYTAG, "使用GCM推送");
                 break;
-            case "MiPush":
+            /*case "MiPush":
                 if(shouldInit()) {
                     MiPushClient.registerPush(this, mi_APP_ID, mi_APP_KEY);
                 }
                 //SharedPreferences miSettings =        getSharedPreferences("mipush", Context.MODE_PRIVATE);
                 deviceMiToken = miSettings.getString("regId",deviceMiToken);
                // Log.e(MYTAG, "使用MiPush推送");
-                break;
-            case "HwPush":
+                break;*/
+            /*case "HwPush":
                 //调用connect方法前需要init，已在MyApplication中作相应处理
                 HMSAgent.connect(this, new ConnectHandler() {
                     @Override
@@ -111,7 +111,7 @@ public class CurrentUserActivity extends Activity {
                 });
                 //stopMiPush();
                 //  Log.e(MYTAG, "使用HwPush推送");
-                break;
+                break;*/
             default:
                 deviceGcmToken = FirebaseInstanceId.getInstance().getToken();
                 //stopMiPush();
@@ -136,7 +136,7 @@ public class CurrentUserActivity extends Activity {
                                     int position, long id) {
                 User p=(User) parent.getItemAtPosition(position);
                 Intent intentSend = new Intent(getApplicationContext(), DialogActivity.class);
-                intentSend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intentSend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 Bundle msgDialogBundle = new Bundle();
                 msgDialogBundle.putString("msgId",p.getUserId());

@@ -13,11 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.huawei.android.hms.agent.HMSAgent;
-import com.huawei.android.hms.agent.common.handler.ConnectHandler;
-import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
-import com.huawei.hms.support.api.push.TokenResult;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,7 +53,7 @@ public class FragmentPreferences extends Activity {
                 stopHwPush();
                 Log.e(MYTAG, "使用GCM推送");
                 break;
-            case "MiPush":
+            /*case "MiPush":
                 if(shouldInit()) {
                     MiPushClient.registerPush(this, mi_APP_ID, mi_APP_KEY);
                 }
@@ -66,8 +61,8 @@ public class FragmentPreferences extends Activity {
                 stopHwPush();
                 // MiPushClient.enablePush(getInstance().getApplicationContext());
                 Log.e(MYTAG, "使用MiPush推送");
-                break;
-            case "HwPush":
+                break;*/
+            /*case "HwPush":
                 HMSAgent.init(this);
                 HMSAgent.connect(this, new ConnectHandler() {
                     @Override
@@ -82,7 +77,7 @@ public class FragmentPreferences extends Activity {
                 });
                 stopMiPush();
                 Log.e(MYTAG, "使用HwPush推送");
-                break;
+                break;*/
             default:
                 deviceGcmToken = FirebaseInstanceId.getInstance().getToken();
                 stopMiPush();

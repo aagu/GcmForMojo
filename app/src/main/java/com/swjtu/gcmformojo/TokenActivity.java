@@ -2,14 +2,11 @@ package com.swjtu.gcmformojo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.huawei.android.hms.agent.HMSAgent;
-import com.huawei.android.hms.agent.common.handler.ConnectHandler;
-import com.huawei.android.hms.agent.push.handler.GetTokenHandler;
-import com.huawei.hms.support.api.push.TokenResult;
 
 import static com.swjtu.gcmformojo.MyApplication.deviceGcmToken;
 import static com.swjtu.gcmformojo.MyApplication.deviceHwToken;
@@ -18,7 +15,7 @@ import static com.swjtu.gcmformojo.MyApplication.miSettings;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;
 
 
-public class TokenActivity extends Activity {
+public class TokenActivity extends AppCompatActivity {
 
 
     private TextView myTokenSender;
@@ -53,15 +50,15 @@ public class TokenActivity extends Activity {
                     myToken.setText(tokenNo);
                 }
                 break;
-            case "MiPush":
+            /*case "MiPush":
                 //SharedPreferences miSettings =        getSharedPreferences("mipush", Context.MODE_PRIVATE);
                 deviceMiToken = miSettings.getString("regId",deviceMiToken);
                 if(deviceMiToken!=null)
                     myToken.setText(deviceMiToken);
                 else
                     myToken.setText(tokenNo);
-                break;
-            case "HwPush":
+                break;*/
+            /*case "HwPush":
                 HMSAgent.connect(this, new ConnectHandler() {
                     @Override
                     public void onConnect(int rst) {
@@ -78,7 +75,7 @@ public class TokenActivity extends Activity {
                 else {
                     myToken.setText(tokenNo);
                 }
-                break;
+                break;*/
                 /*
             case "FmPush":
                 com.meizu.cloud.pushsdk.PushManager.register(this, fm_APP_ID, fm_APP_KEY);

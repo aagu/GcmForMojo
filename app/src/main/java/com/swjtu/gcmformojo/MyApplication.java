@@ -16,7 +16,6 @@ import android.text.Spanned;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.huawei.android.hms.agent.HMSAgent;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -182,10 +181,10 @@ public class MyApplication extends Application {
         mySettings = getSharedPreferences(PREF, Context.MODE_PRIVATE);
 
         //华为推送初始化
-        String pushType=mySettings.getString("push_type","GCM");
+        /*String pushType=mySettings.getString("push_type","GCM");
         if(pushType.equals("HwPush")){
             HMSAgent.init(this);
-        }
+        }*/
 
         //初始化通知分组（android O）及通知渠道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

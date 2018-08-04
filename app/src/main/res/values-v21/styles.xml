@@ -22,14 +22,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="android:ThemeOverlay.Material.Light" />
 
-    <style name="MyDialog" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
 </resources>

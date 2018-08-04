@@ -47,7 +47,7 @@
             android:key="qq_notify_click" />
 
         <RingtonePreference
-            android:defaultValue=""
+            android:defaultValue=" "
             android:title="@string/settings_title_notification_sound"
             android:key="ringtone_preference_qq"
             android:ringtoneType="notification" />
