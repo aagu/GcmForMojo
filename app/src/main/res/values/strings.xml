@@ -20,6 +20,18 @@
     <string name="forcetouch1">设置</string>
     <string name="forcetouch2">设备码（令牌）</string>
 
+    <string-array name="nightmode_entries">
+        <item>自动</item>
+        <item>夜间</item>
+        <item>白天</item>
+    </string-array>
+
+    <string-array name="nightmode_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="qq_notify_click">
         <item>打开会话列表</item>
         <item>弹出回复窗口</item>
@@ -194,6 +206,7 @@
     <string name="text_control_unsupported_short">不支持的命令</string>
     <string name="qq_contacts">QQ 联系人</string>
     <string name="wx_contacts">微信联系人</string>
+    <string name="theme">主题</string>
 
 
 </resources>

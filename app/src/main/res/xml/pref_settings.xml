@@ -2,6 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+    <PreferenceCategory android:title="@string/theme">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/nightmode_entries"
+            android:entryValues="@array/nightmode_values"
+            android:key="nightmode"
+            android:title="夜间模式" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_category_global">
 
         <ListPreference
@@ -17,7 +27,7 @@
 
     <PreferenceCategory android:title="@string/settings_category_qq">
 
-   <CheckBoxPreference
+        <CheckBoxPreference
             android:defaultValue="true"
             android:title="@string/settings_title_qq_push_switch"
             android:summaryOn="@string/settings_summary_on_push_switch"

@@ -3,8 +3,16 @@
 
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#3369e8</color>
+    <color name="textColorPrimary">#060606</color>
+    <color name="navigationBarColor">#3f51b5</color>
+    <color name="windowBackground">#ffffff</color>
     <color name="colorNotification_qq">#1296DB</color>
     <color name="colorNotification_wechat">#62B900</color>
+    <color name="colorPrimary_night">#232323</color>
+    <color name="colorPrimaryDark_night">#161616</color>
+    <color name="textColorPrimary_night">#FFFFFF</color>
+    <color name="navigationBarColor_night">#232323</color>
+    <color name="windowBackground_night">#2d2d2d</color>
 
 </resources>

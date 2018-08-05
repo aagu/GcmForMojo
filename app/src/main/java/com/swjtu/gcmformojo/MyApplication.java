@@ -11,6 +11,7 @@ import android.content.pm.ShortcutManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.Html;
 import android.text.Spanned;
 import android.support.multidex.MultiDex;
@@ -171,9 +172,28 @@ public class MyApplication extends Application {
 
     }
 
+    private void initNightMode() {
+        String nightmode = getSharedPreferences(PREF, Context.MODE_PRIVATE).getString("nightmode", "1");
+
+        switch (nightmode) {
+            case "1":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_AUTO);
+                break;
+            case "2":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case "3":
+                AppCompatDelegate.setDefaultNightMode(
+                        AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+    }
 
     @Override
     public void onCreate() {
+        initNightMode();
         super.onCreate();
         //初始化全局变量
         myApp = this;

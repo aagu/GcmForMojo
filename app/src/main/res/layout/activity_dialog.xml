@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/dialog_bg"
     android:orientation="vertical"
     android:id="@+id/ReplyLinearLayout">
 
@@ -18,14 +17,12 @@
         android:layout_weight="1"
         android:layout_marginBottom="3.0dip"
         android:layout_marginTop="3.0dip"
-        android:background="#ffffffff"
         android:orientation="vertical"
         android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffffff"
             android:orientation="vertical"
             android:scrollbars="vertical">
 
@@ -62,12 +59,12 @@
     <LinearLayout
         android:id="@+id/bottom_panel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:paddingBottom="1dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/edittext_content"
             android:layout_width="0.0dip"
             android:layout_height="match_parent"
@@ -81,24 +78,18 @@
             android:imeOptions="actionSend"
             android:inputType="text"
             android:maxLines="1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black">
+            android:textAppearance="?android:attr/textAppearanceMedium">
 
             <requestFocus />
-        </EditText>
+        </android.support.design.widget.TextInputEditText>
 
-        <LinearLayout
-            android:id="@+id/button_with_counter"
+
+        <ImageButton
+            android:id="@+id/imagebutton_send"
             android:layout_width="48dp"
-            android:layout_height="48dp">
-
-            <ImageButton
-                android:id="@+id/imagebutton_send"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:src="@android:drawable/ic_menu_send" />
-        </LinearLayout>
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@android:drawable/ic_menu_send" />
     </LinearLayout>
 </LinearLayout>
