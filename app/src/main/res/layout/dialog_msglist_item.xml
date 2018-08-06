@@ -2,10 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:minHeight="18dp">
 
+    <LinearLayout
+        android:id="@+id/left_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/friend_bubble"
+        android:layout_gravity="left">
+        <TextView
+            android:id="@+id/left_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textColor="@color/textColor"
+            android:autoLink="web"/>
+    </LinearLayout>
 
-<TextView android:id="@+id/text_message_item"
+    <LinearLayout
+        android:id="@+id/right_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/user_bubble"
+        android:layout_gravity="right">
+        <TextView
+            android:id="@+id/right_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:autoLink="web"/>
+    </LinearLayout>
+
+
+<!--TextView android:id="@+id/text_message_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -14,6 +46,6 @@
     android:paddingLeft="6dp"
     android:minHeight="18dp"
     android:textIsSelectable="true"
-    android:autoLink="web"/>
+    android:autoLink="web"/-->
 
 </LinearLayout>

@@ -1,8 +1,13 @@
 package com.swjtu.gcmformojo;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,29 +20,32 @@ import static com.swjtu.gcmformojo.MyApplication.miSettings;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;
 
 
-public class TokenActivity extends AppCompatActivity {
+public class TokenDialog extends DialogFragment {
 
 
     private TextView myTokenSender;
     private TextView myToken;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_token);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.activity_token, null);
+        myTokenSender = (TextView) view.findViewById(R.id.textView_sender);
+        myToken = (TextView) view.findViewById(R.id.myToken);
+        builder.setView(view);
 
-        myTokenSender = (TextView) findViewById(R.id.textView_sender);
-        myToken = (TextView) findViewById(R.id.myToken);
-
+        return builder.create();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
 
         super.onResume();
         String tokenNo = getString(R.string.text_token_no);
 
-       //SharedPreferences Settings =        getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        //SharedPreferences Settings =        getSharedPreferences(PREF, Context.MODE_PRIVATE);
         String pushType = mySettings.getString("push_type","GCM");
         myTokenSender.setText(pushType);
 
@@ -90,8 +98,4 @@ public class TokenActivity extends AppCompatActivity {
 
 
     }
-
-    public void onTitleClick(View view) {
-    }
-
 }

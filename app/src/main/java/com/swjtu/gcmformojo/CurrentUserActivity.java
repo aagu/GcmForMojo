@@ -11,14 +11,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -28,18 +29,14 @@ import java.util.List;
 
 import static com.swjtu.gcmformojo.MyApplication.SYS;
 import static com.swjtu.gcmformojo.MyApplication.deviceGcmToken;
-import static com.swjtu.gcmformojo.MyApplication.deviceMiToken;
 import static com.swjtu.gcmformojo.MyApplication.getCurTime;
-import static com.swjtu.gcmformojo.MyApplication.miSettings;
-import static com.swjtu.gcmformojo.MyApplication.mi_APP_ID;
-import static com.swjtu.gcmformojo.MyApplication.mi_APP_KEY;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;
 
 public class CurrentUserActivity extends AppCompatActivity {
 
     private ArrayList<User> currentUserList;
     public static Handler userHandler;
-    public ListView currentUserListView;
+    public RecyclerView currentUserListView;
     public UserAdapter currentUserAdapter;
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -120,23 +117,23 @@ public class CurrentUserActivity extends AppCompatActivity {
 
         }
 
-        currentUserListView = (ListView) findViewById(R.id.current_user_list_view);
+        currentUserListView = findViewById(R.id.current_user_list_view);
+        currentUserListView.setLayoutManager(new LinearLayoutManager(this));
 
         addNotfiyContent();
 
-        currentUserAdapter = new UserAdapter(CurrentUserActivity.this,R.layout.current_userlist_item,currentUserList);
+        currentUserAdapter = new UserAdapter(currentUserList);
         currentUserListView.setAdapter(currentUserAdapter);
-        currentUserListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //currentUserListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 
-        currentUserListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        currentUserAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                User p=(User) parent.getItemAtPosition(position);
+            public void onItemClick(View view, int position) {
+                User p=currentUserList.get(position);
                 Intent intentSend = new Intent(getApplicationContext(), DialogActivity.class);
-                //intentSend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentSend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intentSend.putExtra("user", p);
 
                 Bundle msgDialogBundle = new Bundle();
                 msgDialogBundle.putString("msgId",p.getUserId());
@@ -154,13 +151,9 @@ public class CurrentUserActivity extends AppCompatActivity {
 
                 startActivity(intentSend);
             }
-        });
-
-        currentUserListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent,View view,int position,long id) {
-
+            public boolean onItemLongClick(View view, int position) {
                 //系统信息不能删除
                 if(!currentUserList.get(position).getUserId().equals("0") && !currentUserList.get(position).getUserId().equals("1") && !currentUserList.get(position).getUserId().equals("2")) {
                     currentUserList.remove(position);
@@ -170,6 +163,7 @@ public class CurrentUserActivity extends AppCompatActivity {
                 //return false;//当返回false时,会触发短按事件
             }
         });
+
     }
 
     private boolean shouldInit() {
@@ -253,8 +247,10 @@ public class CurrentUserActivity extends AppCompatActivity {
                 startActivity(intentHelp);
                 break;
             case R.id.action_token:
-                Intent intentToken = new Intent(this, TokenActivity.class);
-                startActivity(intentToken);
+                //Intent intentToken = new Intent(this, TokenDialog.class);
+                //startActivity(intentToken);
+                DialogFragment newFragment = new TokenDialog();
+                newFragment.show(getSupportFragmentManager(), "token");
                 break;
             default:
                 return super.onOptionsItemSelected(item);

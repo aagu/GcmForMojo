@@ -123,7 +123,8 @@
                 android:value=".CurrentUserActivity" />
         </activity>
         <activity
-            android:name=".TokenActivity">
+            android:name=".TokenDialog"
+            android:theme="@style/MyDialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

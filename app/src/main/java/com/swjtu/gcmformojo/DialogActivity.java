@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.Log;
@@ -63,7 +65,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
     private View line_view;
     private EditText editText_content;
-    private ListView msgListView;
+    private RecyclerView msgListView;
     private String msgId;
     private String msgTitle;
     private String msgBody;
@@ -72,7 +74,8 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private String msgTime;
     private String wxPackgeName;
     private String qqPackgeName;
-    private static ArrayAdapter<Spanned> msgAdapter;
+    //private static ArrayAdapter<Spanned> msgAdapter;
+    private static MsgAdapter msgAdapter;
 
     public static Handler msgHandler;
     public static int notifyId;
@@ -108,7 +111,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
 
                 if(handlerMsg.equals("UpdateMsgList") && msgAdapter!=null){
                     msgAdapter.notifyDataSetChanged();
-                    msgListView.setSelection(msgSave.get(msgId).size());
+                    //msgListView.setSelection(msgSave.get(msgId).size());
                 }
 
                 super.handleMessage(msg);
@@ -116,6 +119,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         };
 
         Intent intent = this.getIntent();
+        //User p = (User) intent.getSerializableExtra("user");
         Bundle msgDialogBundle = intent.getExtras();
 
         notifyId = msgDialogBundle.getInt("notifyId");
@@ -162,7 +166,8 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         Boolean wxIsReply=mySettings.getBoolean("check_box_preference_wx_reply",false);
 
         //textView_sender = (TextView) findViewById(R.id.textView_sender);
-        msgListView = (ListView) findViewById(R.id.msg_list_view);
+        msgListView = findViewById(R.id.msg_list_view);
+        msgListView.setLayoutManager(new LinearLayoutManager(this));
         //imgMsgType = (ImageView) findViewById(R.id.msgType_imageView);
         imageButton_send = (ImageButton) findViewById(R.id.imagebutton_send);
         editText_content = (EditText) findViewById(R.id.edittext_content);
@@ -286,7 +291,8 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         //textView_sender.setText(msgTitle); //弹窗标题
-        msgAdapter = new ArrayAdapter<>(DialogActivity.this,R.layout.dialog_msglist_item,R.id.text_message_item,msgSave.get(msgId));
+        //msgAdapter = new ArrayAdapter<>(DialogActivity.this,R.layout.dialog_msglist_item,R.id.text_message_item,msgSave.get(msgId));
+        msgAdapter = new MsgAdapter(msgSave, msgId);
         msgListView.setAdapter(msgAdapter);
 
 
@@ -382,7 +388,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         //将发送信息加入聊天记录
         Spanned mySendMsg;
         String str = getColorMsgTime(msgType,true);
-        mySendMsg=toSpannedMessage( str + isSucess + editText_content.getText().toString());
+        mySendMsg=toSpannedMessage( str + isSucess + editText_content.getText().toString() + "////send");
         if(msgSave.get(msgId)==null) {
             List<Spanned> msgList = new ArrayList<>();
             msgList.add(mySendMsg);
@@ -408,7 +414,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             new userThread().start();
 
         msgAdapter.notifyDataSetChanged();
-        msgListView.setSelection(msgSave.get(msgId).size());
+        //msgListView.setSelection(msgSave.get(msgId).size());
 
         //系统控制处理
         String content = editText_content.getText().toString().toLowerCase();

@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MyTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary_night</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackground_night</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary_night</item>
+        <item name="android:textColor">@color/textColorPrimary_night</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigationBarColor_night</item>
+        <item name="android:itemBackground">@color/colorPrimary_night</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@color/textColorPrimary_night</item>
+    </style>
+
+</resources>
