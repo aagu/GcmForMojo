@@ -284,8 +284,8 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
            if(!msgBody.equals(getString(R.string.text_chat_initiative))) {
                msgList.add(toSpannedMessage(str + msgBody));
 
-           }else {
-               msgList.add(toSpannedMessage(""));
+           /*}else {
+               msgList.add(toSpannedMessage(""));*/
            }
            msgSave.put(msgId, msgList);
         }
