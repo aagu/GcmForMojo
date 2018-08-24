@@ -207,6 +207,7 @@
     <string name="qq_contacts">QQ 联系人</string>
     <string name="wx_contacts">微信联系人</string>
     <string name="theme">主题</string>
+    <string name="nightMode">夜间模式</string>
 
 
 </resources>

@@ -11,10 +11,6 @@
     <color name="color_secondary_text">#000000</color>
     <color name="colorNotification_qq">#1296DB</color>
     <color name="colorNotification_wechat">#62B900</color>
-    <color name="colorPrimary_night">#232323</color>
-    <color name="colorPrimaryDark_night">#161616</color>
-    <color name="textColorPrimary_night">#FFFFFF</color>
-    <color name="navigationBarColor_night">#232323</color>
-    <color name="windowBackground_night">#2d2d2d</color>
+
 
 </resources>

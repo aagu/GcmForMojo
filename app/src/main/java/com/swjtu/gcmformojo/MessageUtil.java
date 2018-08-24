@@ -566,29 +566,35 @@ public class MessageUtil {
 
         NotificationCompat.Builder notificationBuilder = null;
         //判断API版本，并设置通知图标颜色
-        notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.qq_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.qq))
-                .setTicker(ticker)
-                .setContentTitle(msgTitle)
-                .setContentText(msgBody)
-                .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
-                        .bigText(msgBody))
-             //   .setSubText(context.getString(R.string.notification_group_qq_name))
-                .setAutoCancel(true)
-                .setNumber(msgCount)
-             //   .setSound(defaultSoundUri)
-                .setDefaults(DEFAULT_LIGHTS)
-                .setDeleteIntent(pendingIntentCancel);
-        if(!defaultSoundUri.equals("")) {
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            notificationBuilder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.qq_notification)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.qq))
+                    .setTicker(ticker)
+                    .setContentTitle(msgTitle)
+                    .setContentText(msgBody)
+                    .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
+                            .bigText(msgBody))
+                    //   .setSubText(context.getString(R.string.notification_group_qq_name))
+                    .setAutoCancel(true)
+                    .setNumber(msgCount)
+                    //   .setSound(defaultSoundUri)
+                    .setDefaults(DEFAULT_LIGHTS)
+                    .setDeleteIntent(pendingIntentCancel);
+        } else {
+            notificationBuilder = new NotificationCompat.Builder(context);
+            notificationBuilder.setGroup(context.getString(R.string.notification_group_qq_id))
+                    .setSmallIcon(R.drawable.qq_notification);
+            notificationBuilder.setGroupSummary(true);
+            NotificationCompat.MessagingStyle.Message message =
+                    new NotificationCompat.MessagingStyle.Message(msgBody,Calendar.getInstance().getTimeInMillis(),msgTitle);
+            notificationBuilder.setStyle(new NotificationCompat.MessagingStyle(msgTitle).addMessage(message));
+        }
+        if(!defaultSoundUri.equals(" ")) {
             notificationBuilder.setSound(defaultSoundUri);
         }
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(context.getResources().getColor(R.color.colorNotification_qq));
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            notificationBuilder.setGroup(context.getString(R.string.notification_group_qq_id));
-            notificationBuilder.setGroupSummary(true);
         }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             //根据发送者类别区分通知渠道
@@ -755,29 +761,35 @@ public class MessageUtil {
          * commented by Alex Wang
          * at 20180205
          */
-        notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.weixin_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.weixin))
-                .setTicker(tickerWx)
-                .setContentTitle(msgTitle)
-                .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
-                        .bigText(msgBody))
-                .setContentText(msgBody)
-             //   .setSubText(context.getString(R.string.notification_group_wechat_name))
-                .setAutoCancel(true)
-                .setNumber(msgCount)
-                .setSound(defaultSoundUri)
-             //   .setDefaults(DEFAULT_LIGHTS)
-                .setDeleteIntent(pendingIntentCancel);
-        if(!defaultSoundUri.equals("")) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            notificationBuilder = new NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.weixin_notification)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.weixin))
+                    .setTicker(tickerWx)
+                    .setContentTitle(msgTitle)
+                    .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
+                            .bigText(msgBody))
+                    .setContentText(msgBody)
+                    //   .setSubText(context.getString(R.string.notification_group_wechat_name))
+                    .setAutoCancel(true)
+                    .setNumber(msgCount)
+                    //   .setSound(defaultSoundUri)
+                    .setDefaults(DEFAULT_LIGHTS)
+                    .setDeleteIntent(pendingIntentCancel);
+        } else {
+            NotificationCompat.MessagingStyle.Message message =
+                    new NotificationCompat.MessagingStyle.Message(msgBody,Calendar.getInstance().getTimeInMillis(),msgTitle);
+            notificationBuilder = new NotificationCompat.Builder(context);
+            notificationBuilder.setStyle(new NotificationCompat.MessagingStyle(msgTitle).addMessage(message))
+                    .setSmallIcon(R.drawable.weixin_notification);
+            notificationBuilder.setGroup(context.getString(R.string.notification_group_wechat_id));
+            notificationBuilder.setGroupSummary(true);
+        }
+        if(!defaultSoundUri.equals(" ")) {
             notificationBuilder.setSound(defaultSoundUri);
         }
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(context.getResources().getColor(R.color.colorNotification_wechat));
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            notificationBuilder.setGroup(context.getString(R.string.notification_group_wechat_id));
-            notificationBuilder.setGroupSummary(true);
         }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             switch(senderType) {
@@ -1038,7 +1050,6 @@ public class MessageUtil {
             throw e;
         }
 
-
         // 其次把文件插入到系统图库
         try
         {
@@ -1099,7 +1110,7 @@ public class MessageUtil {
         List<UsageStats> usageStats = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime);
         if (usageStats == null || usageStats.size() == 0)
         {
-            if (!HavaPermissionForTest(context))
+            if (!HavePermissionForTest(context))
             {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1123,7 +1134,7 @@ public class MessageUtil {
      * @param context 上下文参数
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static boolean HavaPermissionForTest(Context context)
+    private static boolean HavePermissionForTest(Context context)
     {
         try
         {

@@ -4,12 +4,13 @@
 
     <PreferenceCategory android:title="@string/theme">
 
-        <ListPreference
+        <ThemePreference
             android:defaultValue="1"
             android:entries="@array/nightmode_entries"
             android:entryValues="@array/nightmode_values"
-            android:key="nightmode"
-            android:title="夜间模式" />
+            android:key="nightMode"
+            android:title="@string/nightMode"
+            android:summary="%s"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_category_global">
@@ -84,7 +85,7 @@
             android:singleLine="true"
             android:title="@string/settings_title_qq_package"
             android:key="edit_text_preference_qq_packgename"
-            android:summary="{v}" />
+            android:summary="%s" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -98,7 +99,7 @@
             android:singleLine="true"
             android:title="@string/settings_title_reply_url"
             android:key="edit_text_preference_qq_replyurl"
-            android:summary="{v}" />
+            android:summary="%s" />
         
         <CheckBoxPreference
                 android:defaultValue="false"
@@ -107,7 +108,7 @@
                 android:summary="@string/settings_summary_reply_validation" />
 
         <EditTextPreference
-                android:defaultValue=""
+                android:defaultValue=" "
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:title="@string/settings_title_reply_salt"
@@ -149,7 +150,7 @@
             android:key="wx_notify_click" />
 
         <RingtonePreference
-            android:defaultValue=""
+            android:defaultValue=" "
             android:title="@string/settings_title_notification_sound"
             android:key="ringtone_preference_wx"
             android:ringtoneType="notification" />
@@ -176,7 +177,7 @@
             android:singleLine="true"
             android:title="@string/settings_title_wechat_package"
             android:key="edit_text_preference_wx_packgename"
-            android:summary="{v}" />
+            android:summary="%s" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -190,7 +191,7 @@
             android:singleLine="true"
             android:title="@string/settings_title_reply_url"
             android:key="edit_text_preference_wx_replyurl"
-            android:summary="{v}" />
+            android:summary="%s" />
 
         <CheckBoxPreference
                 android:defaultValue="false"
@@ -199,7 +200,7 @@
                 android:summary="@string/settings_summary_reply_validation" />
 
         <EditTextPreference
-                android:defaultValue=""
+                android:defaultValue=" "
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:title="@string/settings_title_reply_salt"

@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ShortcutManager;
@@ -78,6 +79,8 @@ public class MyApplication extends Application {
     private final ArrayList<WechatFriendGroup> WechatFriendGroups= new ArrayList<>();
 
     private static MyApplication myApp;
+    private UiModeManager mUiModeManager = null;
+
 
     public static MyApplication getInstance() {
         return myApp;
@@ -172,28 +175,24 @@ public class MyApplication extends Application {
 
     }
 
-    private void initNightMode() {
-        String nightmode = getSharedPreferences(PREF, Context.MODE_PRIVATE).getString("nightmode", "1");
-
-        switch (nightmode) {
+    public void changeTheme(String key) {
+        UiModeManager mUiModeManager = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
+        switch (key) {
             case "1":
-                AppCompatDelegate.setDefaultNightMode(
-                        AppCompatDelegate.MODE_NIGHT_AUTO);
+                mUiModeManager.setNightMode(UiModeManager.MODE_NIGHT_AUTO);
                 break;
             case "2":
-                AppCompatDelegate.setDefaultNightMode(
-                        AppCompatDelegate.MODE_NIGHT_YES);
+                mUiModeManager.setNightMode(UiModeManager.MODE_NIGHT_YES);
                 break;
             case "3":
-                AppCompatDelegate.setDefaultNightMode(
-                        AppCompatDelegate.MODE_NIGHT_NO);
+                mUiModeManager.setNightMode(UiModeManager.MODE_NIGHT_NO);
         }
-
     }
 
     @Override
     public void onCreate() {
-        initNightMode();
+        String nightmode = getSharedPreferences(PREF, Context.MODE_PRIVATE).getString("nightmode", "1");
+        changeTheme(nightmode);
         super.onCreate();
         //初始化全局变量
         myApp = this;

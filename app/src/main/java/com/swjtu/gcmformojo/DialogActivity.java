@@ -112,6 +112,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 if(handlerMsg.equals("UpdateMsgList") && msgAdapter!=null){
                     msgAdapter.notifyDataSetChanged();
                     //msgListView.setSelection(msgSave.get(msgId).size());
+                    msgListView.scrollToPosition(msgAdapter.getItemCount() - 1);
                 }
 
                 super.handleMessage(msg);

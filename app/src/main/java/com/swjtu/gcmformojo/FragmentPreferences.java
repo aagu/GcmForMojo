@@ -2,17 +2,22 @@ package com.swjtu.gcmformojo;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,15 +58,15 @@ public class FragmentPreferences extends Activity {
                 stopHwPush();
                 Log.e(MYTAG, "使用GCM推送");
                 break;
-            /*case "MiPush":
+            case "MiPush":
                 if(shouldInit()) {
                     MiPushClient.registerPush(this, mi_APP_ID, mi_APP_KEY);
                 }
                 miSettings = getSharedPreferences("mipush", Context.MODE_PRIVATE);
                 stopHwPush();
-                // MiPushClient.enablePush(getInstance().getApplicationContext());
+                //MiPushClient.enablePush(getInstance().getApplicationContext());
                 Log.e(MYTAG, "使用MiPush推送");
-                break;*/
+                break;
             /*case "HwPush":
                 HMSAgent.init(this);
                 HMSAgent.connect(this, new ConnectHandler() {
@@ -144,8 +149,9 @@ public class FragmentPreferences extends Activity {
         return line;
     }
 
-
     public static class PrefsFragement extends PreferenceFragment{
+
+        private ListPreference themePref;
 
         public class PrefListener implements Preference.OnPreferenceChangeListener {
             private String format = null;
@@ -175,7 +181,6 @@ public class FragmentPreferences extends Activity {
                 return true;
             }
 
-
         }
 
         private boolean shouldInit() {
@@ -195,6 +200,18 @@ public class FragmentPreferences extends Activity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             this.addPreferencesFromResource(R.xml.pref_settings);
+
+            themePref = (ListPreference) findPreference("nightMode");
+            themePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    String value = preference.getSharedPreferences().getString(preference.getKey(), "1");
+                    if(preference.getKey().equals("nightMode")) getInstance().changeTheme(value);
+                    return true;
+                }
+            });
+            
+            new PrefListener("nightMode");
 
             //监听QQ设置
             new PrefListener("edit_text_preference_qq_packgename"); //包名

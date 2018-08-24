@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -29,7 +30,11 @@ import java.util.List;
 
 import static com.swjtu.gcmformojo.MyApplication.SYS;
 import static com.swjtu.gcmformojo.MyApplication.deviceGcmToken;
+import static com.swjtu.gcmformojo.MyApplication.deviceMiToken;
 import static com.swjtu.gcmformojo.MyApplication.getCurTime;
+import static com.swjtu.gcmformojo.MyApplication.miSettings;
+import static com.swjtu.gcmformojo.MyApplication.mi_APP_ID;
+import static com.swjtu.gcmformojo.MyApplication.mi_APP_KEY;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;
 
 public class CurrentUserActivity extends AppCompatActivity {
@@ -84,14 +89,14 @@ public class CurrentUserActivity extends AppCompatActivity {
                 //stopMiPush();
                // Log.e(MYTAG, "使用GCM推送");
                 break;
-            /*case "MiPush":
+            case "MiPush":
                 if(shouldInit()) {
                     MiPushClient.registerPush(this, mi_APP_ID, mi_APP_KEY);
                 }
                 //SharedPreferences miSettings =        getSharedPreferences("mipush", Context.MODE_PRIVATE);
                 deviceMiToken = miSettings.getString("regId",deviceMiToken);
                // Log.e(MYTAG, "使用MiPush推送");
-                break;*/
+                break;
             /*case "HwPush":
                 //调用connect方法前需要init，已在MyApplication中作相应处理
                 HMSAgent.connect(this, new ConnectHandler() {
