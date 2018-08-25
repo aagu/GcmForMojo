@@ -1,6 +1,5 @@
 package com.swjtu.gcmformojo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,17 +9,17 @@ import android.os.Build;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 //import android.view.Window;
 //import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import org.json.JSONArray;
@@ -40,6 +39,7 @@ import static com.swjtu.gcmformojo.MyApplication.PREF;
 import static com.swjtu.gcmformojo.MyApplication.WEIXIN;
 import static com.swjtu.gcmformojo.MyApplication.getCurTime;
 import static com.swjtu.gcmformojo.MyApplication.WechatUIDConvert;
+import static com.swjtu.gcmformojo.MyApplication.setRotateAnimation;
 
 public class WechatContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +48,7 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
 
     private WechatFriendAdapter WechatFriendAdapter;
 
-    private Button btn_wechat_contacts_update;
+    private FloatingActionButton fab_wechat_contacts_update;
     private ExpandableListView WechatFriendExpandListView;
 
     @Override
@@ -88,8 +88,9 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
         switch (v.getId())
         {
             case R.id.wechat_contacts_update:
-                ContactUpdateTask update = new ContactUpdateTask();
+                ContactUpdateTask update = new ContactUpdateTask(v);
                 update.execute();
+                setRotateAnimation(v);
         }
     }
 
@@ -146,10 +147,10 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
 
     //定义初始化界面时执行的其他命令
     private void init() {
-        btn_wechat_contacts_update = (Button) this.findViewById(R.id.wechat_contacts_update);
-        WechatFriendExpandListView = (ExpandableListView) findViewById(R.id.wechat_friend_ExpandListView);
+        fab_wechat_contacts_update = this.findViewById(R.id.wechat_contacts_update);
+        WechatFriendExpandListView =  findViewById(R.id.wechat_friend_ExpandListView);
 
-        btn_wechat_contacts_update.setOnClickListener(this);
+        fab_wechat_contacts_update.setOnClickListener(this);
 
         WechatFriendAdapter = new WechatFriendAdapter(WechatContactsActivity.this, WechatFriendGroups);
         WechatFriendExpandListView.setAdapter(WechatFriendAdapter);
@@ -190,7 +191,13 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
 
     // 使用AsyncTask优化前台点击更新按钮后的用户交互性能
     // 目前阶段仅供测试，因为已发现返回上级页面时命令不能继续执行的问题
-    public class ContactUpdateTask extends AsyncTask<Void, Void, Void> {
+    private class ContactUpdateTask extends AsyncTask<Void, Void, Void> {
+
+        private View view;
+
+        public ContactUpdateTask(View v) {
+            this.view=v;
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -242,7 +249,6 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
 
                WechatFriendGroups.add(groupInfo);// 把自定义大组成员对象放入一个list中，传递给适配器
            }
-           //  Snackbar.make(v, "更新成功", Snackbar.LENGTH_SHORT).show();
            return null;
        }
 
@@ -252,9 +258,10 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
        }
 
        @Override
-       protected void onPostExecute(Void aVoid) {
+       protected void onPostExecute(Void voids) {
            WechatFriendAdapter.notifyDataSetChanged();
-           super.onPostExecute(aVoid);
+           Snackbar.make(view, "更新成功", Snackbar.LENGTH_SHORT).show();
+           super.onPostExecute(voids);
        }
    }
 

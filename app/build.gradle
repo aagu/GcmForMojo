@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.github.wenmingvs:AndroidProcess:-SNAPSHOT'
+    implementation 'com.github.florent37:expansionpanel:1.1.1'
     //implementation 'com.android.tools:sdklib:26.1.2'
     implementation  files('libs/MiPush_SDK_Client_3_1_2.jar')
     testImplementation 'junit:junit:4.12'

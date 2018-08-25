@@ -1,5 +1,6 @@
 package com.swjtu.gcmformojo;
 
+import android.animation.ObjectAnimator;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
@@ -17,6 +18,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+import android.view.View;
 
 
 import java.text.SimpleDateFormat;
@@ -283,6 +285,14 @@ public class MyApplication extends Application {
         CharSequence name = getString(group_name);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.createNotificationChannelGroup(new NotificationChannelGroup(group, name));
+    }
+
+    //Fab旋转动画
+    public static void setRotateAnimation(View view){
+        ObjectAnimator rotate = null;
+        rotate = ObjectAnimator.ofFloat(view,"rotation",180);
+        rotate.setDuration(100);
+        rotate.start();
     }
 
 }
