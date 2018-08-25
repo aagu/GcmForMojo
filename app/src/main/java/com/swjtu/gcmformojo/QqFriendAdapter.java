@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -27,21 +28,30 @@ public class QqFriendAdapter extends BaseExpandableListAdapter {
 
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+        GroupHold groupHold;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.qq_friend_group_items, null);
+            groupHold = new GroupHold();
+            groupHold.tvGroupName = convertView.findViewById(R.id.qq_friend_group_name);
+            groupHold.tvGroupName.setText(getGroup(groupPosition).toString());// 设置大组成员名称
+            groupHold.ivGoToChildIv = convertView.findViewById(R.id.qq_group_indicator);// 是否展开大组的箭头图标
+
+            convertView.setTag(groupHold);
+        } else {
+            groupHold = (GroupHold)convertView.getTag();
         }
 
-        TextView title = (TextView) convertView.findViewById(R.id.qq_friend_group_name);
-        title.setText(getGroup(groupPosition).toString());// 设置大组成员名称
-/*
-        ImageView image = (ImageView) convertView.findViewById(R.id.tubiao);// 是否展开大组的箭头图标
-        if (isExpanded)// 大组展开时的箭头图标
-            image.setBackgroundResource(R.drawable.group_unfold_arrow);
-        else
+        if (isExpanded) {
+            // 大组展开时的箭头图标
+            groupHold.ivGoToChildIv.setImageResource(R.drawable.ic_unfold);
+        }
+        else {
             // 大组合并时的箭头图标
-            image.setBackgroundResource(R.drawable.group_fold_arrow);
-*/
+            groupHold.ivGoToChildIv.setImageResource(R.drawable.ic_fold);
+        }
+
+
         return convertView;
     }
 
@@ -91,9 +101,6 @@ public class QqFriendAdapter extends BaseExpandableListAdapter {
         else
             qqFriendNameView.setText("\t\t"+markname);
 
-
-
-
         return convertView;
     }
 
@@ -139,5 +146,8 @@ public class QqFriendAdapter extends BaseExpandableListAdapter {
         this.group = group;
     }
 
-
+    class GroupHold {
+        TextView  tvGroupName;
+        ImageView ivGoToChildIv;
+    }
 }

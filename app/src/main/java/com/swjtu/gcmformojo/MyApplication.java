@@ -1,6 +1,8 @@
 package com.swjtu.gcmformojo;
 
+import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
@@ -19,6 +21,7 @@ import android.text.Spanned;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 
 
 import java.text.SimpleDateFormat;
@@ -288,11 +291,17 @@ public class MyApplication extends Application {
     }
 
     //Fab旋转动画
-    public static void setRotateAnimation(View view){
-        ObjectAnimator rotate = null;
-        rotate = ObjectAnimator.ofFloat(view,"rotation",180);
-        rotate.setDuration(100);
+    public static void startRotateAnimation(ObjectAnimator rotate){
+        rotate.setDuration(1000);
+        rotate.setRepeatMode(ValueAnimator.RESTART);
+        rotate.setRepeatCount(ValueAnimator.INFINITE);
         rotate.start();
+    }
+
+    public static void stopRotateAnimation(ObjectAnimator rotate) {
+        if(rotate != null) {
+            rotate.cancel();
+        }
     }
 
 }

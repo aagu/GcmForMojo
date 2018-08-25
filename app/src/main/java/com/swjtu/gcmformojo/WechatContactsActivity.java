@@ -1,5 +1,6 @@
 package com.swjtu.gcmformojo;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
@@ -39,7 +39,8 @@ import static com.swjtu.gcmformojo.MyApplication.PREF;
 import static com.swjtu.gcmformojo.MyApplication.WEIXIN;
 import static com.swjtu.gcmformojo.MyApplication.getCurTime;
 import static com.swjtu.gcmformojo.MyApplication.WechatUIDConvert;
-import static com.swjtu.gcmformojo.MyApplication.setRotateAnimation;
+import static com.swjtu.gcmformojo.MyApplication.startRotateAnimation;
+import static com.swjtu.gcmformojo.MyApplication.stopRotateAnimation;
 
 public class WechatContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,6 +51,8 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
 
     private FloatingActionButton fab_wechat_contacts_update;
     private ExpandableListView WechatFriendExpandListView;
+
+    ObjectAnimator rotate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +93,8 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
             case R.id.wechat_contacts_update:
                 ContactUpdateTask update = new ContactUpdateTask(v);
                 update.execute();
-                setRotateAnimation(v);
+                rotate = ObjectAnimator.ofFloat(v,"rotation",360);
+                startRotateAnimation(rotate);
         }
     }
 
@@ -261,6 +265,7 @@ public class WechatContactsActivity extends AppCompatActivity implements View.On
        protected void onPostExecute(Void voids) {
            WechatFriendAdapter.notifyDataSetChanged();
            Snackbar.make(view, "更新成功", Snackbar.LENGTH_SHORT).show();
+           stopRotateAnimation(rotate);
            super.onPostExecute(voids);
        }
    }
