@@ -180,6 +180,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         if(msgId.equals("0")) {
             msgListLinearLayout.setVisibility(View.GONE);
             imageButton_send.setVisibility(View.GONE);
+            editText_content.setVisibility(View.GONE);
             line_view.setVisibility(View.GONE);
             sysTextView.setVisibility(View.VISIBLE);
             editText_content.clearFocus();
