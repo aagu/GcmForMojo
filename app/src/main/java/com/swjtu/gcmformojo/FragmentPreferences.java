@@ -151,8 +151,6 @@ public class FragmentPreferences extends Activity {
 
     public static class PrefsFragement extends PreferenceFragment{
 
-        private ListPreference themePref;
-
         public class PrefListener implements Preference.OnPreferenceChangeListener {
             private String format = null;
 
@@ -177,7 +175,9 @@ public class FragmentPreferences extends Activity {
 
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary(format.replace("{v}", newValue==null?"null":newValue.toString()));
+                String value = newValue.toString();
+                preference.setSummary(format.replace("{v}", value==null?"null":value));
+                if(preference.getKey().equals("nightMode") && newValue != null) getInstance().changeTheme(value);
                 return true;
             }
 
@@ -200,16 +200,6 @@ public class FragmentPreferences extends Activity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             this.addPreferencesFromResource(R.xml.pref_settings);
-
-            themePref = (ListPreference) findPreference("nightMode");
-            themePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    String value = preference.getSharedPreferences().getString(preference.getKey(), "1");
-                    if(preference.getKey().equals("nightMode")) getInstance().changeTheme(value);
-                    return true;
-                }
-            });
             
             new PrefListener("nightMode");
 

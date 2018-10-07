@@ -30,7 +30,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.wenming.library.BackgroundUtil;
+//import com.wenming.library.BackgroundUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -250,7 +250,7 @@ public class MessageUtil {
                         } else if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
                         {
 
-                            isForeground = BackgroundUtil.getRunningTask(context, qqPackgeName);
+                            isForeground = BackgroundUtil.isAppOnForeground(context, qqPackgeName);
                             if (isForeground)
                             {
                                 Log.d(MYTAG, "QQ前台不推送！");
@@ -260,7 +260,7 @@ public class MessageUtil {
                         } else
                         { //对5.0 API 21 单独处理
 
-                            isForeground = BackgroundUtil.getLinuxCoreInfo(context, qqPackgeName);
+                            isForeground = BackgroundUtil.isAppOnForeground(context, qqPackgeName);
                             if (isForeground)
                             {
                                 Log.d(MYTAG, "QQ前台不推送！");
@@ -333,7 +333,7 @@ public class MessageUtil {
                         } else if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT)
                         {
 
-                            Boolean isForeground = BackgroundUtil.getRunningTask(context, wxPackgeName);
+                            Boolean isForeground = BackgroundUtil.isAppOnForeground(context, wxPackgeName);
                             if (isForeground)
                             {
                                 Log.d(MYTAG, "微信前台不推送！");
@@ -342,7 +342,7 @@ public class MessageUtil {
                         } else
                         {
 
-                            Boolean isForeground = BackgroundUtil.getLinuxCoreInfo(context, wxPackgeName);
+                            Boolean isForeground = BackgroundUtil.isAppOnForeground(context, wxPackgeName);
                             if (isForeground)
                             {
                                 Log.d(MYTAG, "微信前台不推送！");
