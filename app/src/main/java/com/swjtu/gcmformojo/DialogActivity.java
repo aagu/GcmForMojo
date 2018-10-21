@@ -152,7 +152,7 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         //清除列表未读计数
-        for(int    i=0;    i<currentUserList.size();    i++){
+        for(int i=0; i<currentUserList.size(); i++){
             if(currentUserList.get(i).getUserId().equals(msgId)){
                 currentUserList.get(i).setMsgCount("0");
                 if(CurrentUserActivity.userHandler!=null)
@@ -313,6 +313,8 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         imageButton_send.setOnClickListener(this);
+
+        msgListView.scrollToPosition(msgAdapter.getItemCount() -1);
     }
 
     @Override
