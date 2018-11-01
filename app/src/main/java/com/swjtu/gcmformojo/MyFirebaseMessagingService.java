@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.swjtu.gcmformojo.Util.MessageUtil;
 
 import static com.swjtu.gcmformojo.MyApplication.MYTAG;
 import static com.swjtu.gcmformojo.MyApplication.mySettings;

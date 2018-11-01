@@ -208,6 +208,8 @@
     <string name="wx_contacts">微信联系人</string>
     <string name="theme">主题</string>
     <string name="nightMode">夜间模式</string>
+    <string name="person_me">我</string>
+    <string name="messageCount">条消息</string>
 
 
 </resources>

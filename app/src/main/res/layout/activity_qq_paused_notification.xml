@@ -10,7 +10,7 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.swjtu.gcmformojo.QqPausedNotificationActivity">
+        tools:context="com.swjtu.gcmformojo.QQ.QqPausedNotificationActivity">
 
         <RadioButton
             android:id="@+id/paused_one_hour"

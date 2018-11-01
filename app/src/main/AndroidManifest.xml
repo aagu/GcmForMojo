@@ -78,7 +78,7 @@
             android:resource="@xml/launcher_menu" />
 
         <activity
-            android:name=".CurrentUserActivity"
+            android:name=".UI.CurrentUserActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
             <intent-filter>
@@ -91,13 +91,13 @@
                 android:resource="@xml/shortcuts"/>
         </activity>
         <activity
-            android:name=".FragmentPreferences"
+            android:name=".UI.FragmentPreferences"
             android:label="@string/title_activity_settings"
             android:launchMode="singleTop"
-            android:parentActivityName=".CurrentUserActivity" >
+            android:parentActivityName=".UI.CurrentUserActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CurrentUserActivity" />
+                android:value=".UI.CurrentUserActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -112,19 +112,19 @@
 
         </activity>
         <activity
-            android:name=".DialogActivity"
+            android:name=".UI.DialogActivity"
             android:windowSoftInputMode="stateUnspecified" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".UI.HelpActivity"
             android:label="@string/title_activity_help"
             android:launchMode="singleTop"
-            android:parentActivityName=".CurrentUserActivity" >
+            android:parentActivityName=".UI.CurrentUserActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CurrentUserActivity" />
+                android:value=".UI.CurrentUserActivity" />
         </activity>
         <activity
-            android:name=".TokenDialog"
+            android:name=".UI.TokenDialog"
             android:theme="@style/MyDialog">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -139,24 +139,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".QqContactsActivity"
+            android:name=".QQ.QqContactsActivity"
             android:label="@string/title_activity_qq_contacts"
             android:launchMode="singleTop"
-            android:parentActivityName=".CurrentUserActivity" >
+            android:parentActivityName=".UI.CurrentUserActivity" >
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".CurrentUserActivity" />
+            android:value=".UI.CurrentUserActivity" />
         </activity>
         <activity
-            android:name=".QqPausedNotificationActivity"></activity>
+            android:name=".QQ.QqPausedNotificationActivity"></activity>
         <activity
-            android:name=".WechatContactsActivity"
+            android:name=".Wechat.WechatContactsActivity"
             android:label="@string/title_activity_wechat_contacts"
             android:launchMode="singleTop"
-            android:parentActivityName=".CurrentUserActivity" >
+            android:parentActivityName=".UI.CurrentUserActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CurrentUserActivity" />
+                android:value=".UI.CurrentUserActivity" />
         </activity>
 
         <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
@@ -187,7 +187,7 @@
 
         <!-- [应用自定义广播接收器，用于通知点击事件] -->
         <receiver
-            android:name=".SysNotificationBroadcastReceiver"
+            android:name=".Receiver.SysNotificationBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="sys_notification_cancelled" />
@@ -195,7 +195,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".QqNotificationBroadcastReceiver"
+            android:name=".QQ.QqNotificationBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="qq_notification_cancelled" />
@@ -203,7 +203,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".WeixinNotificationBroadcastReceiver"
+            android:name=".Wechat.WeixinNotificationBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="weixin_notification_cancelled" />
@@ -211,7 +211,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".QqPausedNotificationReceiver"
+            android:name=".QQ.QqPausedNotificationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="qq_notification_paused" />

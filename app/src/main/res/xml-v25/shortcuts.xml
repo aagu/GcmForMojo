@@ -10,12 +10,12 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.swjtu.gcmformojo"
-            android:targetClass="com.swjtu.gcmformojo.CurrentUserActivity"/>
+            android:targetClass="com.swjtu.gcmformojo.UI.CurrentUserActivity"/>
 
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.swjtu.gcmformojo"
-            android:targetClass="com.swjtu.gcmformojo.QqContactsActivity"/>
+            android:targetClass="com.swjtu.gcmformojo.QQ.QqContactsActivity"/>
     </shortcut>
 
     <shortcut
@@ -28,11 +28,11 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.swjtu.gcmformojo"
-            android:targetClass="com.swjtu.gcmformojo.CurrentUserActivity"/>
+            android:targetClass="com.swjtu.gcmformojo.UI.CurrentUserActivity"/>
 
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.swjtu.gcmformojo"
-            android:targetClass="com.swjtu.gcmformojo.WechatContactsActivity"/>
+            android:targetClass="com.swjtu.gcmformojo.Wechat.WechatContactsActivity"/>
     </shortcut>
 </shortcuts>

@@ -12,9 +12,15 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatDelegate;
+
 import android.text.Html;
 import android.text.Spanned;
+
+import com.swjtu.gcmformojo.QQ.QqFriend;
+import com.swjtu.gcmformojo.QQ.QqFriendGroup;
+import com.swjtu.gcmformojo.Wechat.WechatFriend;
+import com.swjtu.gcmformojo.Wechat.WechatFriendGroup;
+
 import androidx.multidex.MultiDex;
 
 

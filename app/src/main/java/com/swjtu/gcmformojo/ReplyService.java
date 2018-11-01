@@ -1,6 +1,7 @@
 package com.swjtu.gcmformojo;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,10 +10,16 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Message;
-import androidx.annotation.RequiresApi;
+
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import android.text.Spanned;
+import android.util.Log;
+
+import com.swjtu.gcmformojo.UI.CurrentUserActivity;
+import com.swjtu.gcmformojo.UI.DialogActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 import static android.app.Notification.DEFAULT_LIGHTS;
-import static com.swjtu.gcmformojo.DialogActivity.doGetRequestResutl;
-import static com.swjtu.gcmformojo.DialogActivity.getMD5;
+import static com.swjtu.gcmformojo.UI.DialogActivity.doGetRequestResutl;
+import static com.swjtu.gcmformojo.UI.DialogActivity.getMD5;
 import static com.swjtu.gcmformojo.MyApplication.PREF;
 import static com.swjtu.gcmformojo.MyApplication.QQ;
 import static com.swjtu.gcmformojo.MyApplication.WEIXIN;
@@ -86,6 +93,64 @@ public class ReplyService extends IntentService {
 
         msgSave = MyApplication.getInstance().getMsgSave();
         sendmsg(message,msgId,senderType,msgType);
+        handleActionReply(message,notifyId);
+    }
+
+    /** Handles action for replying to messages from the notification. */
+    private void handleActionReply(CharSequence replyCharSequence, int NotifyId) {
+        if (replyCharSequence != null) {
+
+            /*
+             * You have two options for updating your notification (this class uses approach #2):
+             *
+             *  1. Use a new NotificationCompatBuilder to create the Notification. This approach
+             *  requires you to get *ALL* the information that existed in the previous
+             *  Notification (and updates) and pass it to the builder. This is the approach used in
+             *  the MainActivity.
+             *
+             *  2. Use the original NotificationCompatBuilder to create the Notification. This
+             *  approach requires you to store a reference to the original builder. The benefit is
+             *  you only need the new/updated information. In our case, the reply from the user
+             *  which we already have here.
+             *
+             *  IMPORTANT NOTE: You shouldn't save/modify the resulting Notification object using
+             *  its member variables and/or legacy APIs. If you want to retain anything from update
+             *  to update, retain the Builder as option 2 outlines.
+             */
+
+            // Retrieves NotificationCompat.Builder used to create initial Notification
+            NotificationCompat.Builder notificationCompatBuilder =
+                    GlobalNotificationBuilder.getNotificationCompatBuilderInstance();
+
+            // Recreate builder from persistent state if app process is killed
+            /*if (notificationCompatBuilder == null) {
+                // Note: New builder set globally in the method
+                notificationCompatBuilder = recreateBuilderWithMessagingStyle();
+            }*/
+
+            // Since we are adding to the MessagingStyle, we need to first retrieve the
+            // current MessagingStyle from the Notification itself.
+            Notification notification = notificationCompatBuilder.build();
+            NotificationCompat.MessagingStyle messagingStyle =
+                    NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(
+                            notification);
+
+            // Add new message to the MessagingStyle. Set last parameter to null for responses
+            // from user.
+            Person Me = new Person.Builder()
+                    .setName(getString(R.string.person_me))
+                    .setKey("11111111")
+                    .build();
+            messagingStyle.addMessage(replyCharSequence, System.currentTimeMillis(), Me);
+
+            // Updates the Notification
+            notification = notificationCompatBuilder.setStyle(messagingStyle).build();
+
+            // Pushes out the updated Notification
+            NotificationManagerCompat notificationManagerCompat =
+                    NotificationManagerCompat.from(getApplicationContext());
+            notificationManagerCompat.notify(NotifyId, notification);
+        }
     }
 
     // 由DialogActivity复制而来
