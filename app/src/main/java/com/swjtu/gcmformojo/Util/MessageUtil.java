@@ -782,7 +782,7 @@ public class MessageUtil {
 
         notificationBuilder
                 .setSmallIcon(R.drawable.qq_notification)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.qq))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.weixin))
                 .setContentTitle(msgTitle)
                 .setContentText(msgBody)
                 .setStyle(messagingStyle)
