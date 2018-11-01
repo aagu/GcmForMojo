@@ -2,18 +2,15 @@ package com.swjtu.gcmformojo;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;

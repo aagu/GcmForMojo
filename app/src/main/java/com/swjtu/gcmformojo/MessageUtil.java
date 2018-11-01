@@ -24,8 +24,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.RemoteInput;
 import android.text.Spanned;
 import android.util.Log;
 import android.widget.Toast;
@@ -89,14 +89,13 @@ public class MessageUtil {
         currentUserList = MyApplication.getInstance().getCurrentUserList();
         //SharedPreferences mySettings = context.getSharedPreferences(PREF, MODE_PRIVATE);
 
+        int notifyId;
+        int msgCount;
 
-            int notifyId;
-            int msgCount;
 
-
-            if (msgId == null) msgId = "0"; //处理特殊情况
-            if (senderType == null) senderType = "1"; //处理特殊情况 默认为好友
-            if(msgIsAt == null) msgIsAt = "0"; //处理部分服务端未加@标志
+        if (msgId == null) msgId = "0"; //处理特殊情况
+        if (senderType == null) senderType = "1"; //处理特殊情况 默认为好友
+        if(msgIsAt == null) msgIsAt = "0"; //处理部分服务端未加@标志
 
             if(msgType.equals(QQ) ) { //如果能收到QQ或者微信的非系统消息，则表明在线
                 isQqOnline=1;
@@ -493,6 +492,8 @@ public class MessageUtil {
     private static void sendNotificationQq(Context context, String msgTitle, String msgBody, int notifyId, int msgCount, String qqSound, String qqVibrate, String msgId,
                                            String senderType, String qqPackgeName, String msgIsAt)
     {
+        int groupId = 11;
+
         SharedPreferences mySettings = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
 
         String qqNotifyClick = mySettings.getString("qq_notify_click","1");
@@ -575,17 +576,14 @@ public class MessageUtil {
                     .setContentText(msgBody)
                     .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
                             .bigText(msgBody))
-                    //   .setSubText(context.getString(R.string.notification_group_qq_name))
                     .setAutoCancel(true)
                     .setNumber(msgCount)
-                    //   .setSound(defaultSoundUri)
                     .setDefaults(DEFAULT_LIGHTS)
                     .setDeleteIntent(pendingIntentCancel);
         } else {
             notificationBuilder = new NotificationCompat.Builder(context);
-            notificationBuilder.setGroup(context.getString(R.string.notification_group_qq_id))
+            notificationBuilder.setGroup("QQMessages")
                     .setSmallIcon(R.drawable.qq_notification);
-            notificationBuilder.setGroupSummary(true);
             NotificationCompat.MessagingStyle.Message message =
                     new NotificationCompat.MessagingStyle.Message(msgBody,Calendar.getInstance().getTimeInMillis(),msgTitle);
             notificationBuilder.setStyle(new NotificationCompat.MessagingStyle(msgTitle).addMessage(message));
@@ -682,13 +680,22 @@ public class MessageUtil {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notifyId, notificationBuilder.build());
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            final Notification group = new Notification.Builder(context).setSmallIcon(R.drawable.weixin_notification)
+                    .setGroup("QQMessages")
+                    .setAutoCancel(true)
+                    .setGroupSummary(true)
+                    .build();
+            notificationManager.notify(groupId, group);
+        }
     }
 
     //微信通知方法
     private static void sendNotificationWx(Context context ,String msgTitle, String msgBody, int notifyId, int msgCount, String wxSound, String wxVibrate, String msgId,
                                     String senderType, String wxPackgeName, String msgIsAt)
     {
+        int groupId = 22;
+
         SharedPreferences mySettings = context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         String wxNotifyClick = mySettings.getString("wx_notify_click", "1");
 
@@ -770,10 +777,8 @@ public class MessageUtil {
                     .setStyle(new NotificationCompat.BigTextStyle() // 设置通知样式为大型文本样式
                             .bigText(msgBody))
                     .setContentText(msgBody)
-                    //   .setSubText(context.getString(R.string.notification_group_wechat_name))
                     .setAutoCancel(true)
                     .setNumber(msgCount)
-                    //   .setSound(defaultSoundUri)
                     .setDefaults(DEFAULT_LIGHTS)
                     .setDeleteIntent(pendingIntentCancel);
         } else {
@@ -782,8 +787,7 @@ public class MessageUtil {
             notificationBuilder = new NotificationCompat.Builder(context);
             notificationBuilder.setStyle(new NotificationCompat.MessagingStyle(msgTitle).addMessage(message))
                     .setSmallIcon(R.drawable.weixin_notification);
-            notificationBuilder.setGroup(context.getString(R.string.notification_group_wechat_id));
-            notificationBuilder.setGroupSummary(true);
+            notificationBuilder.setGroup("WXMessages");
         }
         if(!defaultSoundUri.equals(" ")) {
             notificationBuilder.setSound(defaultSoundUri);
@@ -875,6 +879,14 @@ public class MessageUtil {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notifyId, notificationBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            final Notification group = new Notification.Builder(context).setSmallIcon(R.drawable.weixin_notification)
+                    .setGroup("WXMessages")
+                    .setAutoCancel(true)
+                    .setGroupSummary(true)
+                    .build();
+            notificationManager.notify(groupId, group);
+        }
     }
 
 

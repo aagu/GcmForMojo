@@ -1,27 +1,21 @@
 package com.swjtu.gcmformojo;
 
-import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ShortcutManager;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import android.text.Html;
 import android.text.Spanned;
-import android.support.multidex.MultiDex;
-import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
+import androidx.multidex.MultiDex;
 
 
 import java.text.SimpleDateFormat;
@@ -33,7 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import static android.text.Html.FROM_HTML_MODE_COMPACT;
-import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 /**
  * 用于存储全局变量

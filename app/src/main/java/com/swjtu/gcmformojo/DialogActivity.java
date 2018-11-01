@@ -7,22 +7,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +72,6 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
     private String msgTime;
     private String wxPackgeName;
     private String qqPackgeName;
-    //private static ArrayAdapter<Spanned> msgAdapter;
     private static MsgAdapter msgAdapter;
 
     public static Handler msgHandler;
@@ -418,7 +415,6 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
             new userThread().start();
 
         msgAdapter.notifyDataSetChanged();
-        //msgListView.setSelection(msgSave.get(msgId).size());
 
         //系统控制处理
         String content = editText_content.getText().toString().toLowerCase();
@@ -599,18 +595,18 @@ public class DialogActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 msgSendRequest.put("id",msgId);
                 msgSendRequest.put("content",msgSend);
-                if(validationRequired) {
-                    String sign="";
-                    try{
-                        sign=getMD5(msgSend+msgId+validationSalt);
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                    msgSendRequest.put("sign",sign);
-                }
                 break;
         }
 
+        if(validationRequired) {
+            String sign="";
+            try{
+                sign=getMD5(msgSend+msgId+validationSalt);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            msgSendRequest.put("sign",sign);
+        }
         Log.e("sendmsg","sending");
         urlSend=urlServer+urlType;
         Log.e("sendmsg",urlSend);
