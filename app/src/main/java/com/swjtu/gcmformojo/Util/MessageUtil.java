@@ -1049,14 +1049,14 @@ public class MessageUtil {
         }
 
         // 其次把文件插入到系统图库
-        try
+        /*try
         {
             MediaStore.Images.Media.insertImage(context.getContentResolver(),
                     file.getAbsolutePath(), fileNameTemp, null);
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();
-        }
+        }*/
 
         // 最后通知图库更新
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
