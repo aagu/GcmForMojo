@@ -781,7 +781,7 @@ public class MessageUtil {
         GlobalNotificationBuilder.setNotificationCompatBuilderInstance(notificationBuilder);
 
         notificationBuilder
-                .setSmallIcon(R.drawable.qq_notification)
+                .setSmallIcon(R.drawable.weixin_notification)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.weixin))
                 .setContentTitle(msgTitle)
                 .setContentText(msgBody)
